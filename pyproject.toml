@@ -1,0 +1,53 @@
+[project]
+name = "oslo-insider-alerts"
+version = "0.1.0"
+description = "Alert system for heavy insider trading on Oslo Stock Exchange (small/medium cap companies)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Oslo Insider Alerts Team"}
+]
+keywords = ["insider-trading", "oslo-bors", "stock-alerts", "financial-monitoring"]
+
+dependencies = [
+    "httpx>=0.25.0",
+    "beautifulsoup4>=4.12.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "apscheduler>=3.10.0",
+    "sqlalchemy>=2.0.0",
+    "aiosqlite>=0.19.0",
+    "rich>=13.0.0",
+    "typer>=0.9.0",
+]
+
+[project.optional-dependencies]
+notifications = [
+    "slack-sdk>=3.21.0",
+    "aiosmtplib>=3.0.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+]
+
+[project.scripts]
+oslo-insider = "oslo_insider_alerts.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
