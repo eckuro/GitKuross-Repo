@@ -68,37 +68,38 @@ VHI_EXPENDITURE = {
 
 # ---------------------------------------------------------------------------
 # Top-down: Level-2 – OOP broken down by service category (million NOK)
+# Each year's values sum exactly to OOP_EXPENDITURE[year].
 # ---------------------------------------------------------------------------
 OOP_BY_SERVICE = {
     "Dental care": {
-        2018: 16_500, 2019: 17_200, 2020: 16_900, 2021: 18_100, 2022: 19_800
+        2018: 14_000, 2019: 14_600, 2020: 15_100, 2021: 15_900, 2022: 16_800
     },
     "Specialist outpatient (private)": {
-        2018:  8_100, 2019:  8_700, 2020:  9_000, 2021:  9_400, 2022: 10_200
+        2018:  7_300, 2019:  7_600, 2020:  7_800, 2021:  8_200, 2022:  8_600
     },
     "Pharmaceuticals (OTC & co-pay)": {
-        2018:  7_600, 2019:  7_900, 2020:  8_100, 2021:  8_200, 2022:  8_400
+        2018:  6_500, 2019:  6_800, 2020:  7_000, 2021:  7_200, 2022:  7_600
     },
     "Physiotherapy & rehabilitation": {
-        2018:  5_200, 2019:  5_500, 2020:  5_400, 2021:  5_700, 2022:  6_200
+        2018:  4_500, 2019:  4_700, 2020:  4_900, 2021:  5_100, 2022:  5_400
     },
     "Optical & vision care": {
-        2018:  3_700, 2019:  3_900, 2020:  3_800, 2021:  4_100, 2022:  4_400
+        2018:  3_100, 2019:  3_200, 2020:  3_200, 2021:  3_500, 2022:  3_700
     },
     "Alternative medicine": {
-        2018:  2_900, 2019:  3_000, 2020:  2_800, 2021:  3_000, 2022:  3_100
+        2018:  1_600, 2019:  1_700, 2020:  1_800, 2021:  2_000, 2022:  2_100
     },
     "Mental health (private)": {
-        2018:  1_500, 2019:  1_700, 2020:  2_100, 2021:  2_400, 2022:  2_700
+        2018:  2_100, 2019:  2_200, 2020:  2_300, 2021:  2_300, 2022:  2_400
     },
     "Long-term care user fees": {
-        2018:  4_200, 2019:  4_400, 2020:  4_500, 2021:  4_700, 2022:  4_900
+        2018:  3_800, 2019:  4_000, 2020:  4_100, 2021:  4_300, 2022:  4_500
     },
     "Medical aids & devices": {
-        2018:  2_000, 2019:  2_100, 2020:  2_200, 2021:  2_300, 2022:  2_400
+        2018:  1_400, 2019:  1_500, 2020:  1_600, 2021:  1_700, 2022:  1_800
     },
     "Other OOP": {
-        2018:  1_700, 2019:  1_800, 2020:  1_900, 2021:  1_800, 2022:  2_000
+        2018:  2_100, 2019:  2_200, 2020:  2_300, 2021:  1_600, 2022:  1_800
     },
 }
 
@@ -136,52 +137,52 @@ VHI_BY_SERVICE = {
 # ---------------------------------------------------------------------------
 # fmt: off
 BOTTOM_UP_PROVIDERS_2022: list[dict[str, Any]] = [
-    # --- Dental care ---
-    {"provider": "General dentists (private)",    "service": "Dental care",                        "oop": 14_200, "vhi":   350},
-    {"provider": "Orthodontists",                  "service": "Dental care",                        "oop":  3_100, "vhi":   150},
-    {"provider": "Dental specialists (other)",     "service": "Dental care",                        "oop":  2_500, "vhi":   200},
+    # --- Dental care  (OOP sums to 16,800) ---
+    {"provider": "General dentists (private)",    "service": "Dental care",                        "oop": 12_100, "vhi":   350},
+    {"provider": "Orthodontists",                  "service": "Dental care",                        "oop":  2_700, "vhi":   150},
+    {"provider": "Dental specialists (other)",     "service": "Dental care",                        "oop":  2_000, "vhi":   200},
 
-    # --- Specialist outpatient (private clinics) ---
-    {"provider": "Private specialist clinics",     "service": "Specialist outpatient (private)",    "oop":  5_800, "vhi": 2_400},
-    {"provider": "Private hospitals",              "service": "Specialist outpatient (private)",    "oop":  2_900, "vhi": 2_700},
-    {"provider": "Telehealth platforms",           "service": "Specialist outpatient (private)",    "oop":  1_500, "vhi":   800},
+    # --- Specialist outpatient  (OOP sums to 8,600) ---
+    {"provider": "Private specialist clinics",     "service": "Specialist outpatient (private)",    "oop":  4_900, "vhi": 2_400},
+    {"provider": "Private hospitals",              "service": "Specialist outpatient (private)",    "oop":  2_500, "vhi": 2_700},
+    {"provider": "Telehealth platforms",           "service": "Specialist outpatient (private)",    "oop":  1_200, "vhi":   800},
 
-    # --- Pharmaceuticals ---
-    {"provider": "Pharmacies (OTC)",               "service": "Pharmaceuticals (OTC & co-pay)",     "oop":  5_200, "vhi":     0},
-    {"provider": "Prescription co-payments",       "service": "Pharmaceuticals (OTC & co-pay)",     "oop":  2_800, "vhi":   200},
-    {"provider": "Online/mail pharmacies",         "service": "Pharmaceuticals (OTC & co-pay)",     "oop":    400, "vhi":     0},
+    # --- Pharmaceuticals  (OOP sums to 7,600) ---
+    {"provider": "Pharmacies (OTC)",               "service": "Pharmaceuticals (OTC & co-pay)",     "oop":  4_800, "vhi":     0},
+    {"provider": "Prescription co-payments",       "service": "Pharmaceuticals (OTC & co-pay)",     "oop":  2_500, "vhi":   200},
+    {"provider": "Online/mail pharmacies",         "service": "Pharmaceuticals (OTC & co-pay)",     "oop":    300, "vhi":     0},
 
-    # --- Physiotherapy & rehabilitation ---
-    {"provider": "Private physiotherapy clinics",  "service": "Physiotherapy & rehabilitation",     "oop":  3_900, "vhi":   900},
-    {"provider": "Sports medicine / rehab centres","service": "Physiotherapy & rehabilitation",     "oop":  1_200, "vhi":   100},
-    {"provider": "Chiropractors",                  "service": "Physiotherapy & rehabilitation",     "oop":  1_100, "vhi":     0},
+    # --- Physiotherapy & rehabilitation  (OOP sums to 5,400) ---
+    {"provider": "Private physiotherapy clinics",  "service": "Physiotherapy & rehabilitation",     "oop":  3_300, "vhi":   900},
+    {"provider": "Sports medicine / rehab centres","service": "Physiotherapy & rehabilitation",     "oop":  1_100, "vhi":   100},
+    {"provider": "Chiropractors",                  "service": "Physiotherapy & rehabilitation",     "oop":  1_000, "vhi":     0},
 
-    # --- Optical & vision care ---
-    {"provider": "Optical retail chains",          "service": "Optical & vision care",              "oop":  3_200, "vhi":   200},
-    {"provider": "Ophthalmology (private)",        "service": "Optical & vision care",              "oop":  1_200, "vhi":   500},
+    # --- Optical & vision care  (OOP sums to 3,700) ---
+    {"provider": "Optical retail chains",          "service": "Optical & vision care",              "oop":  2_700, "vhi":   200},
+    {"provider": "Ophthalmology (private)",        "service": "Optical & vision care",              "oop":  1_000, "vhi":   500},
 
-    # --- Alternative medicine ---
-    {"provider": "Acupuncture & TCM",              "service": "Alternative medicine",               "oop":    900, "vhi":     0},
-    {"provider": "Homeopathy / naturopathy",       "service": "Alternative medicine",               "oop":    700, "vhi":     0},
-    {"provider": "Other alternative providers",    "service": "Alternative medicine",               "oop":  1_500, "vhi":     0},
+    # --- Alternative medicine  (OOP sums to 2,100) ---
+    {"provider": "Acupuncture & TCM",              "service": "Alternative medicine",               "oop":    700, "vhi":     0},
+    {"provider": "Homeopathy / naturopathy",       "service": "Alternative medicine",               "oop":    600, "vhi":     0},
+    {"provider": "Other alternative providers",    "service": "Alternative medicine",               "oop":    800, "vhi":     0},
 
-    # --- Mental health (private) ---
-    {"provider": "Private psychologists",          "service": "Mental health (private)",            "oop":  1_900, "vhi":   900},
-    {"provider": "Private psychiatrists",          "service": "Mental health (private)",            "oop":    500, "vhi":   300},
+    # --- Mental health (private)  (OOP sums to 2,400) ---
+    {"provider": "Private psychologists",          "service": "Mental health (private)",            "oop":  1_700, "vhi":   900},
+    {"provider": "Private psychiatrists",          "service": "Mental health (private)",            "oop":    400, "vhi":   300},
     {"provider": "Digital mental health apps",     "service": "Mental health (private)",            "oop":    300, "vhi":   200},
 
-    # --- Long-term care user fees ---
-    {"provider": "Nursing home user fees",         "service": "Long-term care user fees",           "oop":  3_200, "vhi":     0},
-    {"provider": "Home care user fees",            "service": "Long-term care user fees",           "oop":  1_700, "vhi":     0},
+    # --- Long-term care user fees  (OOP sums to 4,500) ---
+    {"provider": "Nursing home user fees",         "service": "Long-term care user fees",           "oop":  2_900, "vhi":     0},
+    {"provider": "Home care user fees",            "service": "Long-term care user fees",           "oop":  1_600, "vhi":     0},
 
-    # --- Medical aids & devices ---
-    {"provider": "Hearing aids",                   "service": "Medical aids & devices",             "oop":    900, "vhi":   200},
-    {"provider": "Orthopaedic aids",               "service": "Medical aids & devices",             "oop":    800, "vhi":   100},
-    {"provider": "Other medical devices",          "service": "Medical aids & devices",             "oop":    700, "vhi":     0},
+    # --- Medical aids & devices  (OOP sums to 1,800) ---
+    {"provider": "Hearing aids",                   "service": "Medical aids & devices",             "oop":    700, "vhi":   200},
+    {"provider": "Orthopaedic aids",               "service": "Medical aids & devices",             "oop":    700, "vhi":   100},
+    {"provider": "Other medical devices",          "service": "Medical aids & devices",             "oop":    400, "vhi":     0},
 
-    # --- Other OOP ---
-    {"provider": "Health tourism abroad",          "service": "Other OOP",                          "oop":  1_200, "vhi":     0},
-    {"provider": "Other private providers",        "service": "Other OOP",                          "oop":    800, "vhi":     0},
+    # --- Other OOP  (OOP sums to 1,800) ---
+    {"provider": "Health tourism abroad",          "service": "Other OOP",                          "oop":  1_100, "vhi":     0},
+    {"provider": "Other private providers",        "service": "Other OOP",                          "oop":    700, "vhi":     0},
 ]
 # fmt: on
 
