@@ -37,11 +37,7 @@ st.set_page_config(
 # ---------------------------------------------------------------------------
 # Sidebar controls
 # ---------------------------------------------------------------------------
-st.sidebar.image(
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Norway.svg/320px-Flag_of_Norway.svg.png",
-    width=80,
-)
-st.sidebar.title("Controls")
+st.sidebar.title("🇳🇴 Controls")
 
 selected_year = st.sidebar.selectbox(
     "Reference year",
