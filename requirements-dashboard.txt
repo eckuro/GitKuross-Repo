@@ -1,0 +1,5 @@
+# Install with: pip install -r requirements-dashboard.txt
+# Then run:     streamlit run health_dashboard/app.py
+streamlit>=1.32.0
+plotly>=5.20.0
+pandas>=2.0.0
