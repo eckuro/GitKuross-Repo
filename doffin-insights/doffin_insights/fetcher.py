@@ -7,7 +7,8 @@ HTTP clients for two data sources:
 
   TEDClient     — EU Tenders Electronic Daily open-data API (ted.europa.eu)
                   Covers all Norwegian notices above EU threshold (~1.3M NOK).
-                  No registration or API key required.
+                  Free API key from https://developer.ted.europa.eu
+                  Set env var TED_API_KEY or pass api_key= to constructor.
                   Docs: https://ted.europa.eu/api/swagger-ui/index.html
 
 The collector tries Doffin first; if it returns a non-200 or connection error
@@ -15,6 +16,7 @@ it automatically falls back to TED for that search term.
 """
 from __future__ import annotations
 
+import os
 import time
 from datetime import date
 from typing import Any, Optional
@@ -150,14 +152,20 @@ class TEDClient(_BaseClient):
     """
     Client for the TED (Tenders Electronic Daily) v3 API.
 
+    Requires a free API key from https://developer.ted.europa.eu
+    Pass via TED_API_KEY env var or the api_key constructor argument.
+
     Uses POST /notices/search with a QL query string.
     Norway filter: ND ~ NO (buyer country = Norway).
     Docs: https://ted.europa.eu/api/swagger-ui/index.html
     """
 
-    def __init__(self, timeout: float = 60.0):
+    def __init__(self, api_key: Optional[str] = None, timeout: float = 60.0):
         super().__init__(timeout)
         self.base_url = TED_BASE
+        self.api_key = api_key or os.environ.get("TED_API_KEY", "")
+        if self.api_key:
+            self._http.headers.update({"Authorization": f"Bearer {self.api_key}"})
 
     def _build_query(
         self,
@@ -252,9 +260,9 @@ class SmartClient:
     Use as a context manager — closes both underlying HTTP clients on exit.
     """
 
-    def __init__(self):
+    def __init__(self, ted_api_key: Optional[str] = None):
         self._doffin = DoffinClient()
-        self._ted = TEDClient()
+        self._ted = TEDClient(api_key=ted_api_key)
         self._doffin_ok: Optional[bool] = None  # None = not yet probed
 
     def _doffin_available(self) -> bool:

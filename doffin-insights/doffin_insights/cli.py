@@ -5,6 +5,8 @@ from datetime import date
 from pathlib import Path
 from typing import Optional
 
+import os
+
 import typer
 from rich.console import Console
 from rich.table import Table
@@ -145,6 +147,63 @@ def status(
     for vendor, count in vendor_counts.most_common():
         table.add_row(vendor, str(count))
     console.print(table)
+
+
+@app.command()
+def check() -> None:
+    """Check connectivity to Doffin and TED before running a full collect."""
+    import httpx
+
+    results = []
+
+    for label, url, method, payload in [
+        (
+            "Doffin API",
+            "https://doffin.no/api/2.0/Notices?search=SAP&pageSize=1",
+            "GET", None,
+        ),
+        (
+            "TED API (no key)",
+            "https://ted.europa.eu/api/v3.0/notices/search",
+            "POST", {"query": "ND ~ NO AND TI ~ \"SAP\"", "page": 1, "pageSize": 1},
+        ),
+    ]:
+        try:
+            with httpx.Client(timeout=10, follow_redirects=True) as c:
+                if method == "POST":
+                    r = c.post(url, json=payload, headers={"Accept": "application/json"})
+                else:
+                    r = c.get(url, headers={"Accept": "application/json"})
+
+            if r.status_code == 200:
+                console.print(f"[green]✓[/] {label}: [bold]reachable[/] (HTTP 200)")
+            elif r.status_code == 403:
+                console.print(
+                    f"[yellow]✗[/] {label}: [bold]403 Forbidden[/] — "
+                    "likely IP block (cloud/VPN). Run locally or set TED_API_KEY."
+                )
+            elif r.status_code == 401:
+                console.print(
+                    f"[yellow]✗[/] {label}: [bold]401 Unauthorized[/] — "
+                    "API key required. Set TED_API_KEY env var."
+                )
+            else:
+                console.print(f"[yellow]?[/] {label}: HTTP {r.status_code}")
+            results.append(r.status_code)
+        except (httpx.ConnectError, httpx.TimeoutException) as exc:
+            console.print(f"[red]✗[/] {label}: connection failed — {exc}")
+            results.append(0)
+
+    ted_key = os.environ.get("TED_API_KEY", "")
+    if ted_key:
+        console.print(f"\n[dim]TED_API_KEY is set ({ted_key[:8]}…)[/]")
+    else:
+        console.print(
+            "\n[dim]TED_API_KEY not set. "
+            "Register free at https://developer.ted.europa.eu then:[/]\n"
+            "[dim]  export TED_API_KEY=your_key_here[/]\n"
+            "[dim]  doffin-insights collect --source ted[/]"
+        )
 
 
 if __name__ == "__main__":
