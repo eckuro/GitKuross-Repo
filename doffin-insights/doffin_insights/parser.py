@@ -1,4 +1,17 @@
-"""Parse raw Doffin API responses into ProcurementNotice objects."""
+"""
+Parse raw API responses from Doffin and TED into ProcurementNotice objects.
+
+TED field codes used here:
+  ND  notice number / dossier id
+  TI  title (multilingual dict, we prefer 'NOR' then 'ENG')
+  DS  short description
+  CA  contracting authority name
+  TD  notice type code  (cn-standard, can-standard, …)
+  PD  publication date  YYYYMMDD
+  DL  deadline          YYYYMMDD
+  VA  estimated value   {amount, currency}
+  PC  CPV codes         list of {code, …}
+"""
 from __future__ import annotations
 
 import re
@@ -69,7 +82,92 @@ def _notice_type(raw: Any) -> NoticeType:
     return NoticeType.UNKNOWN
 
 
-def parse_notice(raw: dict[str, Any]) -> Optional[ProcurementNotice]:
+def _ted_text(field: Any) -> str:
+    """TED multilingual fields are dicts like {'NOR': '...', 'ENG': '...'}."""
+    if isinstance(field, dict):
+        return field.get("NOR") or field.get("ENG") or next(iter(field.values()), "") or ""
+    return str(field) if field else ""
+
+
+def _ted_notice_type(td: str) -> NoticeType:
+    td = (td or "").lower()
+    if "can" in td or "award" in td:
+        return NoticeType.AWARD
+    if "pin" in td or "prior" in td:
+        return NoticeType.PRIOR_INFO
+    if "cn" in td or "contract" in td:
+        return NoticeType.CONTRACT
+    return NoticeType.UNKNOWN
+
+
+def _ted_date(raw: Any) -> Optional[date]:
+    """TED dates are YYYYMMDD integers or strings."""
+    if not raw:
+        return None
+    s = str(raw).strip()[:8]
+    if len(s) == 8 and s.isdigit():
+        try:
+            return date(int(s[:4]), int(s[4:6]), int(s[6:8]))
+        except ValueError:
+            pass
+    return _parse_date(raw)
+
+
+def _ted_value_nok(va: Any) -> Optional[float]:
+    """VA is {amount: float, currency: str}. Convert EUR→NOK at ~11.5 if needed."""
+    if not isinstance(va, dict):
+        return None
+    amount = va.get("amount") or va.get("value")
+    if not amount:
+        return None
+    currency = (va.get("currency") or "NOK").upper()
+    amount = float(amount)
+    if currency == "NOK":
+        return amount
+    if currency == "EUR":
+        return amount * 11.5  # approximate NOK/EUR for historical data
+    return amount  # leave other currencies as-is (rare for NO notices)
+
+
+def parse_ted_notice(raw: dict[str, Any]) -> Optional[ProcurementNotice]:
+    """Parse a TED v3 API notice into ProcurementNotice."""
+    notice_id = str(raw.get("ND") or raw.get("noticeNumber") or "")
+    if not notice_id:
+        return None
+
+    title = _ted_text(raw.get("TI") or raw.get("title") or "")
+    description = _ted_text(raw.get("DS") or raw.get("description") or "")
+
+    ca = raw.get("CA") or raw.get("contractingAuthority") or {}
+    authority_name = _ted_text(ca) if isinstance(ca, dict) else str(ca)
+
+    cpv_raw = raw.get("PC") or raw.get("cpvCodes") or []
+    cpv_codes = [
+        str(c.get("code", c) if isinstance(c, dict) else c)
+        for c in (cpv_raw if isinstance(cpv_raw, list) else [cpv_raw])
+    ]
+
+    notice = ProcurementNotice(
+        notice_id=f"TED-{notice_id}",
+        title=title,
+        description=description,
+        contracting_authority=authority_name,
+        authority_type=_classify_authority(authority_name),
+        notice_type=_ted_notice_type(str(raw.get("TD") or "")),
+        published_date=_ted_date(raw.get("PD") or raw.get("publicationDate")),
+        deadline_date=_ted_date(raw.get("DL") or raw.get("deadline")),
+        estimated_value_nok=_ted_value_nok(raw.get("VA") or raw.get("estimatedValue")),
+        cpv_codes=cpv_codes,
+        raw_url=f"https://ted.europa.eu/udl?uri=TED:NOTICE:{notice_id}:TEXT:EN:HTML",
+    )
+    notice.matched_vendors = notice.detect_vendors()
+    return notice
+
+
+def parse_notice(raw: dict[str, Any], source: str = "doffin") -> Optional[ProcurementNotice]:
+    if source == "ted":
+        return parse_ted_notice(raw)
+
     notice_id = str(
         raw.get("id") or raw.get("noticeId") or raw.get("doffinId") or raw.get("referenceNumber", "")
     )

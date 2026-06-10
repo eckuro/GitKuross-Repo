@@ -21,17 +21,34 @@ def collect(
     db_path: Path = typer.Option(DEFAULT_DB, "--db", help="SQLite database path"),
     date_from: str = typer.Option("2016-01-01", "--from", help="Start date (YYYY-MM-DD)"),
     date_to: Optional[str] = typer.Option(None, "--to", help="End date (YYYY-MM-DD)"),
+    source: str = typer.Option(
+        "auto",
+        "--source",
+        help="Data source: 'auto' (Doffin with TED fallback), 'doffin', or 'ted'",
+    ),
     dry_run: bool = typer.Option(False, "--dry-run", help="Print search plan without fetching"),
 ) -> None:
-    """Fetch Doffin notices for all tracked enterprise software vendors."""
+    """Fetch notices for all tracked enterprise software vendors.
+
+    Source selection:
+
+    \b
+      auto   — tries Doffin first; falls back to TED if unreachable (default)
+      doffin — Doffin only (Norway's national register, all contract sizes)
+      ted    — TED only (EU open data, guaranteed free, above-threshold only)
+    """
     from .collector import collect as do_collect
     from .database import Database
+
+    if source not in ("auto", "doffin", "ted"):
+        console.print(f"[red]Unknown source '{source}'. Use auto, doffin, or ted.[/]")
+        raise typer.Exit(1)
 
     from_date = date.fromisoformat(date_from)
     to_date = date.fromisoformat(date_to) if date_to else date.today()
 
     with Database(db_path) as db:
-        do_collect(db, date_from=from_date, date_to=to_date, dry_run=dry_run)
+        do_collect(db, date_from=from_date, date_to=to_date, source=source, dry_run=dry_run)  # type: ignore[arg-type]
         console.print(f"[dim]Database: {db_path} ({db.count()} total rows)[/]")
 
 
