@@ -44,6 +44,31 @@ Legend: `●` core/defining hiring focus · `◐` active, multiple open roles fo
 - **Commercial and People/Talent functions concentrate at the software-native companies** (Cognite, Nscale) — consistent with those being the two names actively scaling go-to-market and corporate functions teams, versus the industrial/engineering names where those functions barely surface in public postings.
 - **HSE is present only as a weak signal everywhere it was found** (Aker BP, Aker Solutions, Aker BioMarine) — likely because safety roles are usually folded into operations postings rather than listed as a standalone career-site category, so this undercounts a function that's certainly larger in practice at the offshore/industrial names.
 
+## 3-year momentum filter (2023 → 2026)
+
+A snapshot of who's hiring into what today doesn't show *direction*. This section adds that: headcount trajectory over the last three years per company, which is a much stronger signal than the job-ad snapshot above, because it comes from actual reported/estimated employee counts rather than search-indexed job listings (still subject to the same network limitation — see note below).
+
+Legend: 🔺 strong growth (>15% cumulative) · ▲ modest growth · ● flat/stabilizing · ▼ contraction · ✕ cluster eliminated from the group · ★ new entrant, no 3-year baseline
+
+| Company | Cluster | Headcount 2023 | Latest reported | 3-yr change | Momentum | What drove it |
+|---|---|---|---|---|---|---|
+| **Nscale** | AI infra / data centers | 42 | 578 (2026); 817 by Jul-2026 | ~+1,300%+ | 🔺 | Went from a small JV to Aker's largest single position (Mar 2026 roll-up), funded partly by Cognite sale proceeds |
+| **Cognite** | Data, AI & software | 596 | 898 (2026) | +50.7% | 🔺 | Accelerating GenAI push — hiring velocity roughly doubled (40/mo in 2024 → 89/mo in 2026) even mid-sale to Schneider Electric |
+| **Solstad Offshore** | Vessel ops / maritime | ~831 | 952 (2026) | +14.6% | ▲ | Steady, accelerating in 2026 as order backlog strengthens despite softer utilization |
+| **Aker BP** | Oil & gas E&P | 2,567 | 3,115 (2025) | +21.3%¹ | ▲ | Continued production/asset-development ramp (e.g. Yggdrasil) |
+| **Aker Solutions** | Oilfield engineering | 11,961 | 12,113 (2025) | +1.3% | ● | Stabilized after a sharp 2022–23 cut; order backlog grew far faster than headcount (NOK 60.9bn → 72bn+), i.e. growth without rehiring at the same pace |
+| **Aker BioMarine** | Krill biotech | n/a² | 258 (2025) | net ▼ then ● | ▼ then ● | Shed its Feed Ingredients division (spun into Aker Qrill, Sept 2024), then stabilized/regrew slightly (+3.6% in 2025) around Human Health |
+| **Aker Qrill Company** | Krill harvesting | — | — | — | ★ | Didn't exist 3 years ago — spun out of Aker BioMarine in Sept 2024 as its own JV |
+| **Aker Horizons / Aker Carbon Capture / Mainstream Renewable Power / Aker Clean Hydrogen** | Renewables & carbon capture | one of 4 listed portfolio companies at end-2023 | wound down / dissolved | −100% of the cluster | ✕ | Aker Carbon Capture liquidated after selling its SLB Capturi stake (May 2025); Aker Horizons merged into Aker ASA (Sept 2025) and its shell dissolved (Feb 2026) |
+| **Philly Shipyard, Ocean Yield, American Shipping Co., Kvaerner** | Shipbuilding / ship leasing | in the group | fully exited | — | ✕ | Sold, divested, or liquidated between 2020–2025 (Kvaerner merged into Aker Solutions 2020; Philly Shipyard sold to Hanwha Dec 2024; Ocean Yield long since with KKR; AMSC liquidated Oct 2025) |
+
+¹ Aker BP's own reporting implies ~30% cumulative growth 2023→2026; 2026 figure wasn't available, so the 2025 figure is shown.
+² No clean 2023 baseline was found for Aker BioMarine standalone headcount before its 2023–24 segment restructuring, so only the latest trend (+3.6% in 2025) is shown.
+
+**Headline read:** the group's hiring momentum over the last three years has swung hard from *industrial/engineering* toward *AI infrastructure* — Nscale's growth curve (42 → ~800 people) and Cognite's accelerating GenAI hiring dwarf everything else in the portfolio, while the entire renewables/carbon-capture cluster that existed in 2023 has been eliminated. Oil & gas (Aker BP, Aker Solutions) shows real but comparatively modest growth, increasingly decoupled from headcount (revenue/backlog scaling faster than hiring). Maritime crewing (Solstad, Qrill, BioMarine) moves independently of all of the above, on its own steady cadence.
+
+**Source note:** headcount figures above are third-party estimates (Revelio Labs, LinkedIn-derived) surfaced via web search, cross-checked against official order-backlog and business-segment disclosures where available (Aker Solutions, Aker BioMarine, Aker Carbon Capture). They are estimates, not audited company disclosures — useful for direction and magnitude, not exact headcounts. The same network restriction noted above meant these came from search snippets, not primary-source annual reports fetched directly.
+
 ## Sources consulted
 
 Company career pages and category structures: akerbp.com/en/open-positions, careers.akerbp.com, akersolutions.com/careers/job-search, akerbiomarine.com/careers, careers.akerbiomarine.com (Teamtailor), cognite.com/en/company/careers, careers.aize.io, nscale.com/careers, job-boards.eu.greenhouse.io/nscaleoperationsukltd, solstad.com/opportunities, theqrillcompany.com/careers.
