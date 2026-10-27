@@ -26,4 +26,4 @@ LinkedIn, Duunitori, Jobindex, Finn.no and Platsbanken could not be opened direc
   - Printpack: runs JD Edwards and has evaluated Oracle Cloud ERP.
   - Berry Global: runs JD Edwards.
   - Amcor: runs SAP.
-- **Pattern:** the same as in the Nordics. These companies were already on Oracle and are moving to Fusion, they use it to bring many sites and acquired businesses onto one system, and they usually roll out finance first.
+- **Pattern:** broadly the same as in the Nordics, though with few data points. Where the previous system is known (Tama, Vertiv), the company was already on Oracle and is moving to Fusion. Fusion is used to bring many sites and acquired businesses onto one system, and finance is often rolled out first (Altium).
